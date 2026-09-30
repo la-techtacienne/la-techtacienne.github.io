@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suivi de séries</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #121212;
+        color: #e0e0e0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #ffffff;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .card, #addForm {
+        background: #1e1e1e;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #333;
+    }
+
+    /* ✔️ Champ Titre uniformisé */
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0;
+        border-radius: 4px;
+        border: none;
+        background: #2c2c2c;
+        color: #fff;
+	box-sizing: border-box;   /* ✔ corrige le débordement */
+    }
+
+    .checkbox-line {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 6px 0;
+    }
+
+    .checkbox-line label {
+        font-size: 14px;
+        color: #ccc;
+    }
+
+    button {
+        background: #3b82f6;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+        margin-right: 10px;
+    }
+
+    button.delete {
+        background: #ef4444;
+    }
+
+    #addForm button {
+        width: 100%;
+        background: #10b981;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .updated {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 5px;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Suivi de mes séries</h1>
+
+    <!-- Formulaire d'ajout -->
+    <div id="addForm">
+        <input id="title" type="text" placeholder="Titre de la série">
+        <input id="season" type="number" placeholder="Saison">
+
+        <div class="checkbox-line">
+            <input id="bonus" type="checkbox">
+            <label for="bonus">BONUS</label>
+        </div>
+
+        <input id="episode" type="number" placeholder="Épisode">
+        <input id="time" type="number" placeholder="Temps (optionnel, en minutes)">
+        <button onclick="addSerie()">Ajouter la série</button>
+    </div>
+    <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <button onclick="exportData()" style="flex:1; background:#6366f1;">Exporter JSON</button>
+        <button onclick="importData()" style="flex:1; background:#f59e0b;">Importer JSON</button>
+    </div>
+    <!-- Liste des séries -->
+    <div id="seriesList"></div>
+</div>
+
+<script>
+    let series = JSON.parse(localStorage.getItem("series") || "[]");
+
+    function save() {
+        localStorage.setItem("series", JSON.stringify(series));
+    }
+
+    function addSerie() {
+        const title = document.getElementById("title").value.trim();
+        const season = document.getElementById("season").value;
+        const bonus = document.getElementById("bonus").checked;
+        const episode = document.getElementById("episode").value;
+        const time = document.getElementById("time").value;
+
+        if (!title) return alert("Le titre est obligatoire");
+
+        series.push({
+            id: Date.now(),
+            title,
+            season,
+            bonus,
+            episode,
+            time,
+            updated: Date.now()   // ✔ timestamp numérique
+        });
+
+        save();
+        render();
+        document.getElementById("addForm").reset();
+    }
+
+    function updateSerie(id) {
+        const s = series.find(x => x.id === id);
+        if (!s) return;
+
+        s.season = document.getElementById("season_" + id).value;
+        s.bonus = document.getElementById("bonus_" + id).checked;
+        s.episode = document.getElementById("episode_" + id).value;
+        s.time = document.getElementById("time_" + id).value;
+        s.updated = Date.now();   // ✔ timestamp numérique
+
+        save();
+        render();
+    }
+
+    function deleteSerie(id) {
+        series = series.filter(s => s.id !== id);
+        save();
+        render();
+    }
+
+    function render() {
+        const list = document.getElementById("seriesList");
+        list.innerHTML = series.length + " séries";
+
+        // ✔ Tri décroissant sur le timestamp
+        series.sort((a, b) => b.updated - a.updated);
+
+        series.forEach(s => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const dateText = s.updated
+                ? new Date(s.updated).toLocaleString()
+                : "Date inconnue";
+
+            card.innerHTML = `
+                <strong>${s.title}</strong><br>
+
+                <input id="season_${s.id}" type="number" value="${s.season}" placeholder="Saison">
+
+                <div class="checkbox-line">
+                    <input id="bonus_${s.id}" type="checkbox" ${s.bonus ? "checked" : ""}>
+                    <label for="bonus_${s.id}">BONUS</label>
+                </div>
+
+                <input id="episode_${s.id}" type="number" value="${s.episode}" placeholder="Épisode">
+                <input id="time_${s.id}" type="number" value="${s.time || ""}" placeholder="Temps (min)">
+
+                <button onclick="updateSerie(${s.id})">Mettre à jour</button>
+                <button class="delete" onclick="deleteSerie(${s.id})">Supprimer</button>
+
+                <div class="updated">Dernière mise à jour : ${dateText}</div>
+            `;
+
+            list.appendChild(card);
+        });
+    }
+
+    function exportData() {
+        const data = JSON.stringify(series, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "series.json";
+        a.click();
+
+        URL.revokeObjectURL(url);
+    }
+
+    function importData() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+
+        input.onchange = e => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = event => {
+                try {
+                    const imported = JSON.parse(event.target.result);
+
+                    if (!Array.isArray(imported)) {
+                        alert("Fichier JSON invalide");
+                        return;
+                    }
+
+                    // On remplace complètement les données
+                    series = imported;
+
+                    // On s'assure que updated est bien un timestamp
+                    series.forEach(s => {
+                        if (typeof s.updated !== "number") {
+                            s.updated = Date.now();
+                        }
+                    });
+
+                    save();
+                    render();
+                    alert("Import réussi !");
+                } catch (err) {
+                    alert("Erreur lors de l'import du JSON");
+                }
+            };
+
+            reader.readAsText(file);
+        };
+
+        input.click();
+    }
+
+
+    render();
+</script>
+
+
+</body>
+</html>
