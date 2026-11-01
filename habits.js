@@ -125,14 +125,6 @@ function updateRecord(recordId, updatedData) {
     return null;
 }
 
-// Supprimer un enregistrement
-function deleteRecord(recordId) {
-    const records = getAllRecords();
-    const filteredRecords = records.filter(r => r.id !== recordId);
-    saveToLocalStorage(RECORDS_STORAGE_KEY, filteredRecords);
-    return filteredRecords;
-}
-
 // ===== Initialisation de la page habitudes =====
 
 function initHabitsPage() {
