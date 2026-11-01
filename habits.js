@@ -149,6 +149,8 @@ function initHabitsPage() {
     const recordModal = document.getElementById('recordModal');
     const customRecordForm = document.getElementById('customRecordForm');
     const modalHabitId = document.getElementById('modalHabitId');
+    const recordDateInput = document.getElementById('recordDate');  // ← AJOUTÉ
+    const recordTimeInput = document.getElementById('recordTime');   // ← AJOUTÉ
 
     // Charger et afficher les habitudes
     function loadAndDisplayHabits() {
@@ -233,10 +235,12 @@ function initHabitsPage() {
 
     // Ouvrir la modale pour un enregistrement personnalisé
     function openCustomRecordModal(habitId) {
+        if (!modalHabitId || !recordDateInput || !recordTimeInput) return;  // ← VÉRIFICATION AJOUTÉE
+    
         modalHabitId.value = habitId;
         const { date, time } = getCurrentDateTime();
-        document.getElementById('recordDate').value = date;
-        document.getElementById('recordTime').value = time;
+        recordDateInput.value = date;
+        recordTimeInput.value = time;
         openModal('recordModal');
     }
 
