@@ -1,4 +1,4 @@
-console.info("habits.js version 0.0.8");
+console.info("habits.js version 0.0.9");
 
 // ===== Gestion des habitudes =====
 let modalHabitIdElement = null;
@@ -182,11 +182,11 @@ function initHabitsPage() {
                     <button class="btn btn-primary record-now" data-habit-id="${habit.id}">
                         <i class="fas fa-check"></i> Maintenant
                     </button>
-                    <button class="btn btn-secondary record-custom" data-habit-id="${habit.id}">
-                        <i class="fas fa-calendar-plus"></i> Personnalisé
+                    <button class="btn btn-secondary record-custom" data-habit-id="${habit.id}" title="Personnalisé">
+                        <i class="fas fa-calendar-plus"></i>
                     </button>
-                    <button class="btn btn-danger record-delete" data-habit-id="${habit.id}">
-                        <i class="fas fa-trash-can"></i> Supprimer
+                    <button class="btn btn-danger record-delete" data-habit-id="${habit.id}" title="Supprimer">
+                        <i class="fas fa-trash-can"></i>
                     </button>
                 </div>
             `;
