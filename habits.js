@@ -1,4 +1,4 @@
-console.info("habists.js version 0.0.6");
+console.info("habits.js version 0.0.7");
 
 // ===== Gestion des habitudes =====
 let modalHabitIdElement = null;
