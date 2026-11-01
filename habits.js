@@ -1,4 +1,9 @@
 // ===== Gestion des habitudes =====
+let modalHabitIdElement = null;
+let recordDateElement = null;
+let recordTimeElement = null;
+let recordModalElement = null;
+let customRecordFormElement = null;
 
 // Clé pour le stockage local
 const HABITS_STORAGE_KEY = 'habits_app_habits';
@@ -146,11 +151,13 @@ function initHabitsPage() {
     // Récupérer les éléments du DOM
     const habitForm = document.getElementById('addHabitForm');
     const habitsContainer = document.getElementById('habitsContainer');
-    const recordModal = document.getElementById('recordModal');
-    const customRecordForm = document.getElementById('customRecordForm');
-    const modalHabitId = document.getElementById('modalHabitId');
-    const recordDateInput = document.getElementById('recordDate');  // ← AJOUTÉ
-    const recordTimeInput = document.getElementById('recordTime');   // ← AJOUTÉ
+    
+    // Récupérer les éléments de la modale
+    modalHabitIdElement = document.getElementById('modalHabitId');
+    recordDateElement = document.getElementById('recordDate');
+    recordTimeElement = document.getElementById('recordTime');
+    recordModalElement = document.getElementById('recordModal');
+    customRecordFormElement = document.getElementById('customRecordForm');
 
     // Charger et afficher les habitudes
     function loadAndDisplayHabits() {
@@ -235,20 +242,20 @@ function initHabitsPage() {
 
     // Ouvrir la modale pour un enregistrement personnalisé
     function openCustomRecordModal(habitId) {
-        console.log("modalHabitId", modalHabitId);
-        console.log("recordDateInput", recordDateInput);
-        console.log("recordTimeInput", recordTimeInput);
-        
-        if (!modalHabitId || !recordDateInput || !recordTimeInput) return;  // ← VÉRIFICATION AJOUTÉE
-        
-        modalHabitId.value = habitId;
-        
+        if (!modalHabitIdElement || !recordDateElement || !recordTimeElement || !recordModalElement) {
+            console.error('Modal elements not initialized');
+            return;
+        }
+    
+        modalHabitIdElement.value = habitId;
         const { date, time } = getCurrentDateTime();
-        console.log("date", date);
-        console.log("time", time);
-        recordDateInput.value = date;
-        recordTimeInput.value = time;
-        openModal('recordModal');
+        recordDateElement.value = date;
+        recordTimeElement.value = time;
+    
+        if (recordModalElement) {
+            recordModalElement.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
     }
 
         // Soumettre le formulaire d'ajout d'habitude
@@ -286,7 +293,12 @@ function initHabitsPage() {
             addRecord({ habitId, date, time });
 
             // Fermer la modale
-            closeModal('recordModal');
+            // closeModal('recordModal');
+            // Fermer la modale
+            if (recordModalElement) {
+                recordModalElement.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
 
             // Recharger les habitudes
             loadAndDisplayHabits();
