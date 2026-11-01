@@ -7,10 +7,6 @@ let recordTimeElement = null;
 let recordModalElement = null;
 let customRecordFormElement = null;
 
-// Clé pour le stockage local
-const HABITS_STORAGE_KEY = 'habits_app_habits';
-const RECORDS_STORAGE_KEY = 'habits_app_records';
-
 // Structure d'une habitude
 /*
 {
@@ -35,11 +31,6 @@ const RECORDS_STORAGE_KEY = 'habits_app_records';
 */
 
 // ===== Fonctions de gestion des habitudes =====
-
-// Obtenir toutes les habitudes
-function getAllHabits() {
-    return loadFromLocalStorage(HABITS_STORAGE_KEY, []);
-}
 
 // Obtenir une habitude par ID
 function getHabitById(habitId) {
@@ -100,11 +91,6 @@ function getLastExecution(habitId) {
 }
 
 // ===== Fonctions de gestion des enregistrements =====
-
-// Obtenir tous les enregistrements
-function getAllRecords() {
-    return loadFromLocalStorage(RECORDS_STORAGE_KEY, []);
-}
 
 // Obtenir les enregistrements d'une habitude
 function getRecordsByHabit(habitId) {
