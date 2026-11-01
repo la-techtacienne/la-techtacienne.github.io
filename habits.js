@@ -1,3 +1,5 @@
+console.info("Version 0.0.5");
+
 // ===== Gestion des habitudes =====
 let modalHabitIdElement = null;
 let recordDateElement = null;
@@ -153,6 +155,7 @@ function initHabitsPage() {
     const habitsContainer = document.getElementById('habitsContainer');
     
     // Récupérer les éléments de la modale
+    console.info("Récupérer les éléments de la modale");
     modalHabitIdElement = document.getElementById('modalHabitId');
     recordDateElement = document.getElementById('recordDate');
     recordTimeElement = document.getElementById('recordTime');
@@ -242,6 +245,10 @@ function initHabitsPage() {
 
     // Ouvrir la modale pour un enregistrement personnalisé
     function openCustomRecordModal(habitId) {
+        console.log("modalHabitIdElement", modalHabitIdElement);
+        console.log("recordDateElement", recordDateElement);
+        console.log("recordTimeElement", recordTimeElement);
+        console.log("recordModalElement", recordModalElement);
         if (!modalHabitIdElement || !recordDateElement || !recordTimeElement || !recordModalElement) {
             console.error('Modal elements not initialized');
             return;
