@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi d'Habitudes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calendar-check"></i> Suivi d'Habitudes</h1>
+            <nav>
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Habitudes</a>
+                <a href="records.html"><i class="fas fa-chart-bar"></i> Enregistrements</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="habit-form">
+                <h2><i class="fas fa-plus-circle"></i> Ajouter une nouvelle habitude</h2>
+                <form id="addHabitForm">
+                    <div class="form-group">
+                        <label for="habitTitle"><i class="fas fa-tag"></i> Titre</label>
+                        <input type="text" id="habitTitle" placeholder="Ex: Boire de l'eau" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-icons"></i> Icône</label>
+                        <div class="icon-buttons" id="habitIconContainer">
+                            <button type="button" class="icon-btn" data-icon="fa-cat">
+                                <i class="fas fa-cat"></i>
+                                <span>Chats</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-wallet">
+                                <i class="fas fa-wallet"></i>
+                                <span>Economies</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-broom">
+                                <i class="fas fa-broom"></i>
+                                <span>Entretien</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-glass-water">
+                                <i class="fas fa-glass-water"></i>
+                                <span>Boisson</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-apple-alt">
+                                <i class="fas fa-apple-alt"></i>
+                                <span>Alimentation</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-bed">
+                                <i class="fas fa-bed"></i>
+                                <span>Sommeil</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-walking">
+                                <i class="fas fa-walking"></i>
+                                <span>Marche</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-bicycle">
+                                <i class="fas fa-bicycle"></i>
+                                <span>Vélo</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-dumbbell">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Sport</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-laptop">
+                                <i class="fas fa-laptop"></i>
+                                <span>Travail</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-praying-hands">
+                                <i class="fas fa-praying-hands"></i>
+                                <span>Méditation</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-heart">
+                                <i class="fas fa-stethoscope"></i>
+                                <span>Santé</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-music">
+                                <i class="fas fa-music"></i>
+                                <span>Musique</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-paint-brush">
+                                <i class="fas fa-paint-brush"></i>
+                                <span>Créativité</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-book">
+                                <i class="fas fa-book"></i>
+                                <span>Lecture</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-pen">
+                                <i class="fas fa-pen"></i>
+                                <span>Ecriture</span>
+                            </button>
+                            <button type="button" class="icon-btn" data-icon="fa-calendar-alt">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Organisation</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="habitIcon" value="fa-glass-water" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habitColor"><i class="fas fa-palette"></i> Couleur</label>
+                        <input type="color" id="habitColor" value="#4a6fa5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habitCategory"><i class="fas fa-folder"></i> Catégorie</label>
+                        <select id="habitCategory" required>
+                            <option value="Autres">Autres</option>
+                            <option value="Santé">Santé</option>
+                            <option value="Productivité">Productivité</option>
+                            <option value="Développement personnel">Développement personnel</option>
+                            <option value="Loisirs">Loisirs</option>
+                            <option value="Social">Social</option>
+                            <option value="Finances">Finances</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Ajouter l'habitude
+                    </button>
+                </form>
+            </section>
+
+            <section class="habits-list">
+                <h2><i class="fas fa-list"></i> Mes habitudes</h2>
+                <div id="habitsContainer" class="habits-grid">
+                    <!-- Les habitudes seront affichées ici -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Données stockées localement dans votre navigateur</p>
+        </footer>
+    </div>
+
+    <!-- Modal pour enregistrer une exécution avec date/heure personnalisée -->
+    <div id="recordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><i class="fas fa-calendar-plus"></i> Enregistrer une exécution</h3>
+            <form id="customRecordForm">
+                <input type="hidden" id="modalHabitId">
+                <div class="form-group">
+                    <label for="recordDate"><i class="fas fa-calendar"></i> Date</label>
+                    <input type="date" id="recordDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="recordTime"><i class="fas fa-clock\"></i> Heure</label>
+                    <input type=\"time\" id=\"recordTime\" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="habits.js"></script>
+</body>
+</html>

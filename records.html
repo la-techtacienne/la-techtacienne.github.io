@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enregistrements - Suivi d'Habitudes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calendar-check"></i> Suivi d'Habitudes</h1>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Habitudes</a>
+                <a href="records.html" class="active"><i class="fas fa-chart-bar"></i> Enregistrements</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="records-header">
+                <h2><i class="fas fa-database"></i> Historique des enregistrements</h2>
+
+                <div class="actions-bar">
+                    <div class="filter-section">
+                        <label for="filterCategory"><i class="fas fa-filter"></i> Catégorie:</label>
+                        <select id="filterCategory">
+                            <option value="">Toutes</option>
+                            <option value="Santé">Santé</option>
+                            <option value="Productivité">Productivité</option>
+                            <option value="Développement personnel">Développement personnel</option>
+                            <option value="Loisirs">Loisirs</option>
+                            <option value="Social">Social</option>
+                            <option value="Finances">Finances</option>
+                            <option value="Autres">Autres</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="filterDate"><i class="fas fa-calendar"></i> Date:</label>
+                        <input type="date" id="filterDate">
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="filterHabit"><i class="fas fa-tag"></i> Habitude:</label>
+                        <select id="filterHabit">
+                            <option value="">Toutes</option>
+                        </select>
+                    </div>
+
+                    <button id="clearFilters" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Effacer les filtres
+                    </button>
+                </div>
+
+                <div class="export-import">
+                    <button id="exportBtn" class="btn btn-success">
+                        <i class="fas fa-file-export"></i> Exporter (JSON)
+                    </button>
+                    <button id="importBtn" class="btn btn-warning">
+                        <i class="fas fa-file-import"></i> Importer (JSON)
+                    </button>
+                </div>
+            </section>
+
+            <section class="records-table">
+                <table id="recordsTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="habit"><i class="fas fa-tag"></i> Habitude <span class="sort-icon"></span></th>
+                            <th data-sort="category"><i class="fas fa-folder"></i> Catégorie <span class="sort-icon"></span></th>
+                            <th data-sort="date"><i class="fas fa-calendar"></i> Date <span class="sort-icon"></span></th>
+                            <th data-sort="time"><i class="fas fa-clock"></i> Heure <span class="sort-icon"></span></th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsTableBody">
+                        <!-- Les enregistrements seront affichés ici -->
+                    </tbody>
+                </table>
+                <p id="noRecords" class="no-data">Aucun enregistrement trouvé</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Données stockées localement dans votre navigateur</p>
+        </footer>
+    </div>
+
+    <!-- Modal pour modifier une exécution -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><i class="fas fa-edit"></i> Modifier l'enregistrement</h3>
+            <form id="editRecordForm">
+                <input type="hidden" id="editRecordId">
+                <div class="form-group">
+                    <label for="editRecordDate"><i class="fas fa-calendar"></i> Date</label>
+                    <input type="date" id="editRecordDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="editRecordTime"><i class="fas fa-clock"></i> Heure</label>
+                    <input type="time" id="editRecordTime" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Sauvegarder
+                </button>
+                <button type="button" id="deleteRecordBtn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pour importer des données -->
+    <div id="importModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><i class="fas fa-file-import"></i> Importer des données</h3>
+            <p>Les données importées remplaceront vos données actuelles.</p>
+            <textarea id="importData" placeholder="Collez votre JSON ici..." rows="10" required></textarea>
+            <button id="confirmImportBtn" class="btn btn-warning">
+                <i class="fas fa-check"></i> Importer
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="records.js"></script>
+</body>
+</html>
