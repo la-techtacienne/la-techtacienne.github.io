@@ -236,9 +236,16 @@ function initHabitsPage() {
     // Ouvrir la modale pour un enregistrement personnalisé
     function openCustomRecordModal(habitId) {
         if (!modalHabitId || !recordDateInput || !recordTimeInput) return;  // ← VÉRIFICATION AJOUTÉE
-        console.log(modalHabitId);
+        
+        console.log("modalHabitId", modalHabitId);
+        console.log("recordDateInput", recordDateInput);
+        console.log("recordTimeInput", recordTimeInput);
+        
         modalHabitId.value = habitId;
+        
         const { date, time } = getCurrentDateTime();
+        console.log("date", date);
+        console.log("time", time);
         recordDateInput.value = date;
         recordTimeInput.value = time;
         openModal('recordModal');
