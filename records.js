@@ -1,3 +1,4 @@
+console.info("records.js version 0.0.2");
 // ===== Gestion de la page des enregistrements =====
 
 function initRecordsPage() {
@@ -184,6 +185,16 @@ function initRecordsPage() {
         // Ajouter les écouteurs d'événements
         addRecordEventListeners();
     }
+
+    // Supprimer un enregistrement
+    function deleteRecord(recordId) {
+        const records = getAllRecords();
+        const filteredRecords = records.filter(r => r.id !== recordId);
+        saveToLocalStorage(RECORDS_STORAGE_KEY, filteredRecords);
+        return filteredRecords;
+    }
+    
+
 
     // Ajouter les écouteurs d'événements pour les boutons
     function addRecordEventListeners() {
