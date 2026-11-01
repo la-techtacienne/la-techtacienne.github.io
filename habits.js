@@ -185,6 +185,9 @@ function initHabitsPage() {
                     <button class="btn btn-secondary record-custom" data-habit-id="${habit.id}" title="Personnalisé">
                         <i class="fas fa-calendar-plus"></i>
                     </button>
+                    <button class="btn btn-warn record-edit" data-habit-id="${habit.id}" title="Modifier">
+                        <i class="fas fa-pencil"></i>
+                    </button>
                     <button class="btn btn-danger record-delete" data-habit-id="${habit.id}" title="Supprimer">
                         <i class="fas fa-trash-can"></i>
                     </button>
@@ -213,6 +216,15 @@ function initHabitsPage() {
             btn.addEventListener('click', () => {
                 const habitId = btn.dataset.habitId;
                 openCustomRecordModal(habitId);
+            });
+        });
+
+        // Bouton "Modifier"
+        document.querySelectorAll('.record-edit').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const habitId = btn.dataset.habitId;
+                console.log("Modifier", habitId);
+                loadAndDisplayHabits();
             });
         });
 
