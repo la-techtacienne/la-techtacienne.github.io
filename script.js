@@ -1,3 +1,5 @@
+console.info("script.js version 0.0.2");
+
 // ===== Fonctions utilitaires =====
 // Clé pour le stockage local
 const HABITS_STORAGE_KEY = 'habits_app_habits';
