@@ -1,4 +1,4 @@
-console.info("habits.js version 0.0.7");
+console.info("habits.js version 0.0.8");
 
 // ===== Gestion des habitudes =====
 let modalHabitIdElement = null;
@@ -185,6 +185,9 @@ function initHabitsPage() {
                     <button class="btn btn-secondary record-custom" data-habit-id="${habit.id}">
                         <i class="fas fa-calendar-plus"></i> Personnalisé
                     </button>
+                    <button class="btn btn-danger record-delete" data-habit-id="${habit.id}">
+                        <i class="fas fa-trash-can"></i> Supprimer
+                    </button>
                 </div>
             `;
 
@@ -210,6 +213,14 @@ function initHabitsPage() {
             btn.addEventListener('click', () => {
                 const habitId = btn.dataset.habitId;
                 openCustomRecordModal(habitId);
+            });
+        });
+
+        // Bouton "Supprimer"
+        document.querySelectorAll('.record-delete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const habitId = btn.dataset.habitId;
+                deleteHabit(habitId);
             });
         });
     }
