@@ -1,4 +1,4 @@
-console.info("habits.js version 0.0.9");
+console.info("habits.js version 0.0.10");
 
 // ===== Gestion des habitudes =====
 let modalHabitIdElement = null;
@@ -221,6 +221,7 @@ function initHabitsPage() {
             btn.addEventListener('click', () => {
                 const habitId = btn.dataset.habitId;
                 deleteHabit(habitId);
+                loadAndDisplayHabits();
             });
         });
     }
