@@ -1,4 +1,7 @@
 // ===== Fonctions utilitaires =====
+// Clé pour le stockage local
+const HABITS_STORAGE_KEY = 'habits_app_habits';
+const RECORDS_STORAGE_KEY = 'habits_app_records';
 
 // Générer un ID unique
 function generateId() {
@@ -42,6 +45,16 @@ function getCurrentDateTime() {
 }
 
 // ===== Gestion du stockage local =====
+
+// Obtenir toutes les habitudes
+function getAllHabits() {
+    return loadFromLocalStorage(HABITS_STORAGE_KEY, []);
+}
+
+// Obtenir tous les enregistrements
+function getAllRecords() {
+    return loadFromLocalStorage(RECORDS_STORAGE_KEY, []);
+}
 
 // Sauvegarder les données dans localStorage
 function saveToLocalStorage(key, data) {
